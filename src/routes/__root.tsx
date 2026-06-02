@@ -80,10 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Efeito Vendas — Portal do Cliente" },
       { name: "description", content: "Acompanhe seu desempenho, sua equipe e suas demandas." },
       { property: "og:title", content: "Efeito Vendas — Portal do Cliente" },
-      { property: "og:description", content: "Dashboard do cliente: faturamento, ads, equipe e demandas." },
+      { property: "og:description", content: "Acompanhe seu desempenho, sua equipe e suas demandas." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Efeito Vendas — Portal do Cliente" },
+      { name: "twitter:description", content: "Acompanhe seu desempenho, sua equipe e suas demandas." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ec401ecf-ef3b-4e9c-9770-f897b9aee36e/id-preview-58308445--baee842f-0beb-4924-af56-ac6c3c8c1b47.lovable.app-1780423869610.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ec401ecf-ef3b-4e9c-9770-f897b9aee36e/id-preview-58308445--baee842f-0beb-4924-af56-ac6c3c8c1b47.lovable.app-1780423869610.png" },
     ],
     links: [
       {
