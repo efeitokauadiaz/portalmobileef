@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import type { MouseEvent, TouchEvent } from "react";
 import { useState, useMemo } from "react";
 import { Search, Plus, Inbox, Loader2, Eye, CheckCircle2 } from "lucide-react";
 import { demandas, type DemandaStatus } from "@/lib/data/mock";
