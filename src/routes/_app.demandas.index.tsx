@@ -94,7 +94,25 @@ function DemandasList() {
         />
       </div>
 
-      <div className="-mx-5 overflow-x-auto px-5">
+      <div
+        ref={scrollRef}
+        className="-mx-5 cursor-grab select-none overflow-x-auto px-5 active:cursor-grabbing no-scrollbar"
+        onMouseDown={(e) => {
+          const el = scrollRef.current;
+          if (!el) return;
+          isDragging.current = true;
+          startX.current = e.pageX - el.offsetLeft;
+          scrollLeftStart.current = el.scrollLeft;
+        }}
+        onMouseMove={(e) => {
+          if (!isDragging.current || !scrollRef.current) return;
+          const x = e.pageX - scrollRef.current.offsetLeft;
+          const walk = (x - startX.current) * 1.2;
+          scrollRef.current.scrollLeft = scrollLeftStart.current - walk;
+        }}
+        onMouseUp={() => { isDragging.current = false; }}
+        onMouseLeave={() => { isDragging.current = false; }}
+      >
         <div className="flex gap-2">
           {filtros.map((f) => (
             <button
