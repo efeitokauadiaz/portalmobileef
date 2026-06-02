@@ -167,19 +167,6 @@ function Dashboard() {
 
 
 
-        <div className="mt-3 rounded-2xl border border-border bg-card p-4">
-          <h4 className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-            Próximas ações da equipe
-          </h4>
-          <ul className="space-y-2 text-sm">
-            {adsDetalhe.proximasAcoes.map((a, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                <span className="text-foreground">{a}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
       </section>
 
       {/* CTA demanda */}
