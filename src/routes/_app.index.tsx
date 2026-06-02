@@ -11,10 +11,8 @@ import {
   Eye,
   MousePointerClick,
   Percent,
-  Megaphone,
   ClipboardList,
   MessageCircle,
-  ChevronRight,
 } from "lucide-react";
 import { ads, equipe, faturamento, faturamentoDetalhe, adsDetalhe, demandas, cliente } from "@/lib/data/mock";
 import { SectionTitle, StatCard, Trend, fmtBRL, fmtInt, StatusBadge } from "@/components/app/ui";
