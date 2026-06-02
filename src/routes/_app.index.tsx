@@ -99,28 +99,6 @@ function Dashboard() {
           <DetailBlock label="Reembolsos" value={`- ${fmtBRL(faturamentoDetalhe.reembolsos)}`} />
         </div>
 
-        <div className="mt-3 rounded-2xl border border-border bg-card p-4">
-          <h4 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-            Faturamento por canal
-          </h4>
-          <div className="space-y-3">
-            {faturamentoDetalhe.canais.map((c) => (
-              <div key={c.nome}>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-medium text-foreground">{c.nome}</span>
-                  <span className="font-semibold text-foreground">{fmtBRL(c.valor)}</span>
-                </div>
-                <div className="mt-1 flex items-center gap-2">
-                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-elevated">
-                    <div className="h-full bg-primary" style={{ width: `${c.share}%` }} />
-                  </div>
-                  <span className="w-10 text-right text-[11px] text-muted-foreground">{c.share}%</span>
-                  <Trend value={c.variacao} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
         <div className="mt-3 rounded-2xl border border-border bg-card p-4">
           <h4 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
