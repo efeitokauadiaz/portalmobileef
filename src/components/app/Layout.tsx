@@ -48,7 +48,7 @@ export function AppLayout() {
           </div>
         </header>
 
-        <main className="flex-1 pb-28">
+        <main className="flex-1 pb-32">
           <Outlet />
         </main>
 
