@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app.index'
+import { Route as AppPerfilRouteImport } from './routes/_app.perfil'
 import { Route as AppDemandasIndexRouteImport } from './routes/_app.demandas.index'
 import { Route as AppDemandasNovaRouteImport } from './routes/_app.demandas.nova'
 import { Route as AppDemandasIdRouteImport } from './routes/_app.demandas.$id'
@@ -22,6 +23,11 @@ const AppRoute = AppRouteImport.update({
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPerfilRoute = AppPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDemandasIndexRoute = AppDemandasIndexRouteImport.update({
@@ -42,11 +48,13 @@ const AppDemandasIdRoute = AppDemandasIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
+  '/perfil': typeof AppPerfilRoute
   '/demandas/$id': typeof AppDemandasIdRoute
   '/demandas/nova': typeof AppDemandasNovaRoute
   '/demandas/': typeof AppDemandasIndexRoute
 }
 export interface FileRoutesByTo {
+  '/perfil': typeof AppPerfilRoute
   '/': typeof AppIndexRoute
   '/demandas/$id': typeof AppDemandasIdRoute
   '/demandas/nova': typeof AppDemandasNovaRoute
@@ -55,6 +63,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
+  '/_app/perfil': typeof AppPerfilRoute
   '/_app/': typeof AppIndexRoute
   '/_app/demandas/$id': typeof AppDemandasIdRoute
   '/_app/demandas/nova': typeof AppDemandasNovaRoute
@@ -62,12 +71,13 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demandas/$id' | '/demandas/nova' | '/demandas/'
+  fullPaths: '/' | '/perfil' | '/demandas/$id' | '/demandas/nova' | '/demandas/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demandas/$id' | '/demandas/nova' | '/demandas'
+  to: '/perfil' | '/' | '/demandas/$id' | '/demandas/nova' | '/demandas'
   id:
     | '__root__'
     | '/_app'
+    | '/_app/perfil'
     | '/_app/'
     | '/_app/demandas/$id'
     | '/_app/demandas/nova'
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/perfil': {
+      id: '/_app/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AppPerfilRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/demandas/': {
@@ -119,6 +136,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppPerfilRoute: typeof AppPerfilRoute
   AppIndexRoute: typeof AppIndexRoute
   AppDemandasIdRoute: typeof AppDemandasIdRoute
   AppDemandasNovaRoute: typeof AppDemandasNovaRoute
@@ -126,6 +144,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppPerfilRoute: AppPerfilRoute,
   AppIndexRoute: AppIndexRoute,
   AppDemandasIdRoute: AppDemandasIdRoute,
   AppDemandasNovaRoute: AppDemandasNovaRoute,
