@@ -14,7 +14,259 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ads_metrics: {
+        Row: {
+          active_campaigns: number
+          clicks: number
+          cpa: number
+          ctr: number
+          date: string
+          id: string
+          impressions: number
+          investment: number
+          revenue: number
+          roas: number
+          store_id: string
+        }
+        Insert: {
+          active_campaigns?: number
+          clicks?: number
+          cpa?: number
+          ctr?: number
+          date: string
+          id?: string
+          impressions?: number
+          investment?: number
+          revenue?: number
+          roas?: number
+          store_id: string
+        }
+        Update: {
+          active_campaigns?: number
+          clicks?: number
+          cpa?: number
+          ctr?: number
+          date?: string
+          id?: string
+          impressions?: number
+          investment?: number
+          revenue?: number
+          roas?: number
+          store_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ads_metrics_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      demands: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          priority: string
+          progress: number
+          responsible: string | null
+          status: string
+          store_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          priority?: string
+          progress?: number
+          responsible?: string | null
+          status?: string
+          store_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          priority?: string
+          progress?: number
+          responsible?: string | null
+          status?: string
+          store_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "demands_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          id: string
+          image_url: string | null
+          name: string
+          orders: number
+          revenue: number
+          sold_quantity: number
+          store_id: string
+        }
+        Insert: {
+          id?: string
+          image_url?: string | null
+          name: string
+          orders?: number
+          revenue?: number
+          sold_quantity?: number
+          store_id: string
+        }
+        Update: {
+          id?: string
+          image_url?: string | null
+          name?: string
+          orders?: number
+          revenue?: number
+          sold_quantity?: number
+          store_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      responsibles: {
+        Row: {
+          avatar: string | null
+          email: string | null
+          id: string
+          name: string
+          online_status: string
+          role: string
+          store_id: string
+          whatsapp: string | null
+        }
+        Insert: {
+          avatar?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          online_status?: string
+          role: string
+          store_id: string
+          whatsapp?: string | null
+        }
+        Update: {
+          avatar?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          online_status?: string
+          role?: string
+          store_id?: string
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "responsibles_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      store_metrics: {
+        Row: {
+          average_ticket: number
+          conversion_rate: number
+          date: string
+          fees: number
+          gross_revenue: number
+          id: string
+          monthly_goal: number
+          orders: number
+          refunds: number
+          revenue: number
+          store_id: string
+        }
+        Insert: {
+          average_ticket?: number
+          conversion_rate?: number
+          date: string
+          fees?: number
+          gross_revenue?: number
+          id?: string
+          monthly_goal?: number
+          orders?: number
+          refunds?: number
+          revenue?: number
+          store_id: string
+        }
+        Update: {
+          average_ticket?: number
+          conversion_rate?: number
+          date?: string
+          fees?: number
+          gross_revenue?: number
+          id?: string
+          monthly_goal?: number
+          orders?: number
+          refunds?: number
+          revenue?: number
+          store_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "store_metrics_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stores: {
+        Row: {
+          created_at: string
+          id: string
+          identifier: string
+          name: string
+          plan: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          identifier: string
+          name: string
+          plan?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          identifier?: string
+          name?: string
+          plan?: string
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
