@@ -21,16 +21,12 @@ function EntrarPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) {
-      setError("Digite seu email.");
-      return;
-    }
     if (!code.trim()) {
-      setError("Digite o código de acesso.");
+      setError("Digite o ID da loja.");
       return;
     }
     if (code.trim() !== ACCESS_CODE) {
-      setError("Código inválido. Verifique com seu consultor.");
+      setError("ID da loja inválido. Verifique com seu consultor.");
       return;
     }
     localStorage.setItem("ev-auth", "ok");
