@@ -14,6 +14,48 @@ export const faturamento = {
   conversao: { valor: 3.8, variacao: -0.6 },
 };
 
+export const faturamentoDetalhe = {
+  bruto: 198450.0,
+  liquido: 184320.5,
+  taxas: 8420.3,
+  reembolsos: 5709.2,
+  meta: 220000,
+  metaProgresso: 83.8,
+  canais: [
+    { nome: "Shopify (Loja)", valor: 102340.2, share: 55.5, variacao: 14.2 },
+    { nome: "Marketplace", valor: 48210.4, share: 26.2, variacao: 6.8 },
+    { nome: "Social Commerce", valor: 21450.9, share: 11.6, variacao: 22.5 },
+    { nome: "Atacado / B2B", valor: 12319.0, share: 6.7, variacao: -3.1 },
+  ],
+  topProdutos: [
+    { nome: "Kit Skincare Premium", pedidos: 184, receita: 32450.0 },
+    { nome: "Tênis Runner X3", pedidos: 142, receita: 28490.0 },
+    { nome: "Mochila Urban Pro", pedidos: 121, receita: 18120.0 },
+    { nome: "Camiseta Oversized", pedidos: 318, receita: 15890.0 },
+  ],
+  formasPagamento: [
+    { nome: "Pix", share: 48 },
+    { nome: "Cartão de crédito", share: 41 },
+    { nome: "Boleto", share: 11 },
+  ],
+};
+
+export const adsDetalhe = {
+  campanhas: [
+    { nome: "Black Friday — Retargeting", canal: "Meta Ads", investido: 6840, retorno: 31250, roas: 4.57, status: "ativa" as const },
+    { nome: "Performance Max — Catálogo", canal: "Google Ads", investido: 5210, retorno: 22480, roas: 4.31, status: "ativa" as const },
+    { nome: "Prospecção — Lookalike 1%", canal: "Meta Ads", investido: 4980, retorno: 17820, roas: 3.58, status: "ativa" as const },
+    { nome: "Search Marca", canal: "Google Ads", investido: 2120, retorno: 14210, roas: 6.70, status: "ativa" as const },
+    { nome: "TikTok Criativos UGC", canal: "TikTok Ads", investido: 3210, retorno: 8950, roas: 2.79, status: "teste" as const },
+    { nome: "Reengajamento 30d", canal: "Meta Ads", investido: 2220, retorno: 3610, roas: 1.63, status: "pausada" as const },
+  ],
+  proximasAcoes: [
+    "Escalar campanha de Search Marca em +20% de budget",
+    "Pausar grupo de criativos com CTR < 0,8%",
+    "Testar 3 novos públicos de interesse no Meta Ads",
+  ],
+};
+
 export const ads = {
   investimento: { valor: 24580, variacao: -5.4 },
   retorno: { valor: 98320, variacao: 18.7 },
@@ -44,15 +86,6 @@ export const equipe = [
     status: "online" as const,
     inicial: "R",
   },
-  {
-    nome: "Camila Reis",
-    cargo: "Designer",
-    funcao: "Criativos & Landing pages",
-    email: "camila@efeitovendas.com",
-    telefone: "+55 11 98770-2210",
-    status: "ausente" as const,
-    inicial: "C",
-  },
 ];
 
 export type DemandaStatus = "aberta" | "em_andamento" | "revisao" | "concluida";
@@ -77,7 +110,7 @@ export const demandas: Demanda[] = [
     id: "DEM-1042",
     titulo: "Novo criativo para campanha Black Friday",
     categoria: "Criativos",
-    responsavel: "Camila Reis",
+    responsavel: "Rafael Souza",
     status: "em_andamento",
     prioridade: "alta",
     criadaEm: "28/05/2026",
@@ -86,7 +119,7 @@ export const demandas: Demanda[] = [
     descricao:
       "Produção de 3 variações de criativos estáticos e 1 vídeo curto para campanha de Black Friday focada em retargeting.",
     atualizacoes: [
-      { quando: "01/06 14:20", autor: "Camila Reis", texto: "Primeira rodada de artes enviada para revisão." },
+      { quando: "01/06 14:20", autor: "Rafael Souza", texto: "Primeira rodada de artes enviada para revisão." },
       { quando: "30/05 09:10", autor: "Marina Lopes", texto: "Briefing alinhado com o cliente." },
     ],
   },
@@ -125,7 +158,7 @@ export const demandas: Demanda[] = [
     id: "DEM-1045",
     titulo: "Landing page nova coleção inverno",
     categoria: "Landing page",
-    responsavel: "Camila Reis",
+    responsavel: "Marina Lopes",
     status: "aberta",
     prioridade: "alta",
     criadaEm: "01/06/2026",
