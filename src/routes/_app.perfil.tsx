@@ -117,9 +117,22 @@ function Row({ icon, label, value }: { icon: React.ReactNode; label: string; val
   );
 }
 
-function MenuRow({ icon, label, danger }: { icon: React.ReactNode; label: string; danger?: boolean }) {
+function MenuRow({
+  icon,
+  label,
+  danger,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  danger?: boolean;
+  onClick?: () => void;
+}) {
   return (
-    <button className="flex w-full items-center gap-3 border-b border-border px-4 py-3 text-left last:border-b-0">
+    <button
+      onClick={onClick}
+      className="flex w-full items-center gap-3 border-b border-border px-4 py-3 text-left last:border-b-0"
+    >
       <span className={danger ? "text-destructive" : "text-muted-foreground"}>{icon}</span>
       <span className={`text-sm font-medium ${danger ? "text-destructive" : "text-foreground"}`}>{label}</span>
       <ChevronRight className="ml-auto h-4 w-4 text-muted-foreground" />
