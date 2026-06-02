@@ -19,6 +19,14 @@ export const Route = createFileRoute("/_app/perfil")({
 });
 
 function Perfil() {
+  const navigate = useNavigate();
+
+  const handleSair = () => {
+    localStorage.removeItem("ev-store-id");
+    localStorage.removeItem("ev-store-identifier");
+    navigate({ to: "/entrar" });
+  };
+
   return (
     <div className="space-y-5 px-5 pt-5">
       <div>
