@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   Building2,
   Mail,
@@ -19,6 +19,14 @@ export const Route = createFileRoute("/_app/perfil")({
 });
 
 function Perfil() {
+  const navigate = useNavigate();
+
+  const handleSair = () => {
+    localStorage.removeItem("ev-store-id");
+    localStorage.removeItem("ev-store-identifier");
+    navigate({ to: "/entrar" });
+  };
+
   return (
     <div className="space-y-5 px-5 pt-5">
       <div>
@@ -98,7 +106,7 @@ function Perfil() {
           <MenuRow icon={<Bell className="h-4 w-4" />} label="Notificações" />
           <MenuRow icon={<Lock className="h-4 w-4" />} label="Segurança e senha" />
           <MenuRow icon={<HelpCircle className="h-4 w-4" />} label="Central de ajuda" />
-          <MenuRow icon={<LogOut className="h-4 w-4 text-destructive" />} label="Sair" danger />
+          <MenuRow icon={<LogOut className="h-4 w-4 text-destructive" />} label="Sair" danger onClick={handleSair} />
         </div>
       </section>
 
@@ -117,9 +125,22 @@ function Row({ icon, label, value }: { icon: React.ReactNode; label: string; val
   );
 }
 
-function MenuRow({ icon, label, danger }: { icon: React.ReactNode; label: string; danger?: boolean }) {
+function MenuRow({
+  icon,
+  label,
+  danger,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  danger?: boolean;
+  onClick?: () => void;
+}) {
   return (
-    <button className="flex w-full items-center gap-3 border-b border-border px-4 py-3 text-left last:border-b-0">
+    <button
+      onClick={onClick}
+      className="flex w-full items-center gap-3 border-b border-border px-4 py-3 text-left last:border-b-0"
+    >
       <span className={danger ? "text-destructive" : "text-muted-foreground"}>{icon}</span>
       <span className={`text-sm font-medium ${danger ? "text-destructive" : "text-foreground"}`}>{label}</span>
       <ChevronRight className="ml-auto h-4 w-4 text-muted-foreground" />
