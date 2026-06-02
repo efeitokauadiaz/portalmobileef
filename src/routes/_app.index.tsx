@@ -211,50 +211,8 @@ function Dashboard() {
           <StatCard icon={<Percent className="h-4 w-4" />} label="CTR" value={`${ads.ctr.valor}%`} trend={ads.ctr.variacao} />
         </div>
 
-        <div className="mt-3 rounded-2xl border border-border bg-card p-4">
-          <h4 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-            Campanhas ativas
-          </h4>
-          <div className="space-y-3">
-            {adsDetalhe.campanhas.map((c) => (
-              <div key={c.nome} className="border-b border-border/50 pb-3 last:border-0 last:pb-0">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold text-foreground">{c.nome}</p>
-                    <p className="text-[11px] text-muted-foreground">{c.canal}</p>
-                  </div>
-                  <span
-                    className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase ${
-                      c.status === "ativa"
-                        ? "bg-success/15 text-success"
-                        : c.status === "teste"
-                        ? "bg-primary/15 text-primary"
-                        : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {c.status}
-                  </span>
-                </div>
-                <div className="mt-2 grid grid-cols-3 gap-2 text-[11px]">
-                  <div>
-                    <p className="uppercase tracking-wider text-muted-foreground">Invest.</p>
-                    <p className="font-semibold text-foreground">{fmtBRL(c.investido)}</p>
-                  </div>
-                  <div>
-                    <p className="uppercase tracking-wider text-muted-foreground">Retorno</p>
-                    <p className="font-semibold text-foreground">{fmtBRL(c.retorno)}</p>
-                  </div>
-                  <div>
-                    <p className="uppercase tracking-wider text-muted-foreground">ROAS</p>
-                    <p className={`font-semibold ${c.roas >= 3 ? "text-success" : c.roas >= 2 ? "text-warning" : "text-destructive"}`}>
-                      {c.roas.toFixed(2)}x
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+
+
 
         <div className="mt-3 rounded-2xl border border-border bg-card p-4">
           <h4 className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
