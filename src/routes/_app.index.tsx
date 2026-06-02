@@ -255,12 +255,6 @@ function Dashboard() {
         </div>
       </section>
 
-      {/* Anúncio rodapé */}
-      <div className="flex items-center gap-3 rounded-2xl border border-dashed border-border bg-card/60 p-4 text-xs text-muted-foreground">
-        <Megaphone className="h-4 w-4 text-primary" />
-        Próxima reunião estratégica: <span className="font-semibold text-foreground">12/06, 15h</span>
-        <ChevronRight className="ml-auto h-4 w-4" />
-      </div>
     </div>
   );
 }
