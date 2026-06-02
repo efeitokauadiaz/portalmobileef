@@ -10,7 +10,8 @@ const ACCESS_CODE = "123456";
 
 function EntrarPage() {
   const router = useRouter();
-  const [digits, setDigits] = useState<string[]>(["", "", "", "", "", ""]);
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -19,43 +20,17 @@ function EntrarPage() {
     }
   }, [router]);
 
-  const code = digits.join("");
-
-  const handleChange = (i: number, v: string) => {
-    const clean = v.replace(/\D/g, "").slice(-1);
-    const next = [...digits];
-    next[i] = clean;
-    setDigits(next);
-    setError("");
-    if (clean && i < 5) {
-      const el = document.getElementById(`d-${i + 1}`) as HTMLInputElement | null;
-      el?.focus();
-    }
-  };
-
-  const handleKey = (i: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Backspace" && !digits[i] && i > 0) {
-      const el = document.getElementById(`d-${i - 1}`) as HTMLInputElement | null;
-      el?.focus();
-    }
-  };
-
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    const text = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
-    if (!text) return;
-    e.preventDefault();
-    const next = ["", "", "", "", "", ""];
-    for (let i = 0; i < text.length; i++) next[i] = text[i];
-    setDigits(next);
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (code.length !== 6) {
-      setError("Digite os 6 dígitos do código.");
+    if (!email.trim()) {
+      setError("Digite seu email.");
       return;
     }
-    if (code !== ACCESS_CODE) {
+    if (!code.trim()) {
+      setError("Digite o código de acesso.");
+      return;
+    }
+    if (code.trim() !== ACCESS_CODE) {
       setError("Código inválido. Verifique com seu consultor.");
       return;
     }
@@ -77,25 +52,33 @@ function EntrarPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="rounded-3xl border border-border bg-card p-6">
-          <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <div className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             <KeyRound className="h-3.5 w-3.5 text-primary" />
-            Código de acesso
+            Acesse sua conta
           </div>
 
-          <div className="grid grid-cols-6 gap-2">
-            {digits.map((d, i) => (
+          <div className="space-y-4">
+            <div>
+              <label className="mb-1.5 block text-xs font-medium text-muted-foreground">Email</label>
               <input
-                key={i}
-                id={`d-${i}`}
-                inputMode="numeric"
-                maxLength={1}
-                value={d}
-                onChange={(e) => handleChange(i, e.target.value)}
-                onKeyDown={(e) => handleKey(i, e)}
-                onPaste={handlePaste}
-                className="aspect-square w-full rounded-xl border border-border bg-elevated text-center font-display text-xl font-bold text-foreground focus:border-primary focus:outline-none"
+                type="email"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                placeholder="seu@email.com"
+                className="w-full rounded-xl border border-border bg-elevated px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
               />
-            ))}
+            </div>
+
+            <div>
+              <label className="mb-1.5 block text-xs font-medium text-muted-foreground">Código de acesso</label>
+              <input
+                type="text"
+                value={code}
+                onChange={(e) => { setCode(e.target.value); setError(""); }}
+                placeholder="Digite o código de acesso"
+                className="w-full rounded-xl border border-border bg-elevated px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+              />
+            </div>
           </div>
 
           {error && <p className="mt-3 text-xs font-medium text-destructive">{error}</p>}
