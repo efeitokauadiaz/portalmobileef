@@ -48,7 +48,7 @@ export function AppLayout() {
           </div>
         </header>
 
-        <main className="flex-1 pb-28">
+        <main className="flex-1 pb-32">
           <Outlet />
         </main>
 
@@ -60,7 +60,7 @@ export function AppLayout() {
                 <li key={to}>
                   <Link
                     to={to}
-                    className={`flex flex-col items-center gap-1 py-3 text-[11px] font-medium uppercase tracking-wide transition ${
+                    className={`flex flex-col items-center gap-1 py-5 text-[11px] font-medium uppercase tracking-wide transition ${
                       active ? "text-primary" : "text-muted-foreground"
                     }`}
                   >
@@ -75,7 +75,7 @@ export function AppLayout() {
 
         <Link
           to="/demandas/nova"
-          className="fixed bottom-20 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition active:scale-95"
+          className="fixed bottom-24 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition active:scale-95"
           style={{ maxWidth: "calc(28rem - 2.5rem)" }}
         >
           <Plus className="h-4 w-4" />
