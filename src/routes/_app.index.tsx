@@ -122,31 +122,6 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="mt-3 rounded-2xl border border-border bg-card p-4">
-          <h4 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-            Formas de pagamento
-          </h4>
-          <div className="flex h-2 overflow-hidden rounded-full bg-elevated">
-            {faturamentoDetalhe.formasPagamento.map((f, i) => (
-              <div
-                key={f.nome}
-                className={i === 0 ? "bg-primary" : i === 1 ? "bg-success" : "bg-warning"}
-                style={{ width: `${f.share}%` }}
-              />
-            ))}
-          </div>
-          <div className="mt-3 grid grid-cols-3 gap-2 text-center">
-            {faturamentoDetalhe.formasPagamento.map((f, i) => (
-              <div key={f.nome}>
-                <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
-                  <span className={`h-2 w-2 rounded-full ${i === 0 ? "bg-primary" : i === 1 ? "bg-success" : "bg-warning"}`} />
-                  {f.nome}
-                </div>
-                <div className="font-display text-sm font-bold text-foreground">{f.share}%</div>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* Ads */}
