@@ -19,10 +19,21 @@ function EntrarPage() {
     }
   }, [router]);
 
+  const validateStoreId = (value: string): string | null => {
+    const trimmed = value.trim();
+    if (!trimmed) return "O ID da loja é obrigatório.";
+    if (trimmed.length < 3) return "O ID da loja deve ter pelo menos 3 caracteres.";
+    if (!/^[a-zA-Z0-9_-]+$/.test(trimmed)) {
+      return "O ID da loja só pode conter letras, números, traços e underscores.";
+    }
+    return null;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!code.trim()) {
-      setError("Digite o ID da loja.");
+    const validationError = validateStoreId(code);
+    if (validationError) {
+      setError(validationError);
       return;
     }
     if (code.trim() !== ACCESS_CODE) {
