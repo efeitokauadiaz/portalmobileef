@@ -26,9 +26,10 @@ const statusOrdem: { key: DemandaStatus; label: string; icon: typeof Inbox; colo
 function DemandasList() {
   const [filtro, setFiltro] = useState<(typeof filtros)[number]["key"]>("todas");
   const [q, setQ] = useState("");
-  const scrollRef = useState<HTMLDivElement | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const dragState = useState({ startX: 0, scrollLeft: 0 });
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeftStart = useRef(0);
 
   const lista = demandas.filter((d) => {
     if (filtro !== "todas" && d.status !== filtro) return false;
