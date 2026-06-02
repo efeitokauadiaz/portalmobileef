@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { Search, Plus, Inbox, Loader2, Eye, CheckCircle2 } from "lucide-react";
 import { demandas, type DemandaStatus } from "@/lib/data/mock";
 import { PriorityDot, StatusBadge } from "@/components/app/ui";
@@ -26,6 +26,10 @@ const statusOrdem: { key: DemandaStatus; label: string; icon: typeof Inbox; colo
 function DemandasList() {
   const [filtro, setFiltro] = useState<(typeof filtros)[number]["key"]>("todas");
   const [q, setQ] = useState("");
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeftStart = useRef(0);
 
   const lista = demandas.filter((d) => {
     if (filtro !== "todas" && d.status !== filtro) return false;
@@ -90,7 +94,25 @@ function DemandasList() {
         />
       </div>
 
-      <div className="-mx-5 overflow-x-auto px-5">
+      <div
+        ref={scrollRef}
+        className="-mx-5 cursor-grab select-none overflow-x-auto px-5 active:cursor-grabbing no-scrollbar"
+        onMouseDown={(e) => {
+          const el = scrollRef.current;
+          if (!el) return;
+          isDragging.current = true;
+          startX.current = e.pageX - el.offsetLeft;
+          scrollLeftStart.current = el.scrollLeft;
+        }}
+        onMouseMove={(e) => {
+          if (!isDragging.current || !scrollRef.current) return;
+          const x = e.pageX - scrollRef.current.offsetLeft;
+          const walk = (x - startX.current) * 1.2;
+          scrollRef.current.scrollLeft = scrollLeftStart.current - walk;
+        }}
+        onMouseUp={() => { isDragging.current = false; }}
+        onMouseLeave={() => { isDragging.current = false; }}
+      >
         <div className="flex gap-2">
           {filtros.map((f) => (
             <button
