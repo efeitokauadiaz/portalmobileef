@@ -16,7 +16,7 @@ import {
   MessageCircle,
   ChevronRight,
 } from "lucide-react";
-import { ads, equipe, faturamento, demandas, cliente } from "@/lib/data/mock";
+import { ads, equipe, faturamento, faturamentoDetalhe, adsDetalhe, demandas, cliente } from "@/lib/data/mock";
 import { SectionTitle, StatCard, Trend, fmtBRL, fmtInt, StatusBadge } from "@/components/app/ui";
 
 export const Route = createFileRoute("/_app/")({
@@ -72,8 +72,104 @@ function Dashboard() {
               trend={faturamento.conversao.variacao}
             />
           </div>
+
+          <div className="mt-5 border-t border-border pt-4">
+            <div className="mb-2 flex items-center justify-between text-[11px] uppercase tracking-wider text-muted-foreground">
+              <span>Meta do mês</span>
+              <span className="font-semibold text-foreground">
+                {fmtBRL(faturamento.total)} / {fmtBRL(faturamentoDetalhe.meta)}
+              </span>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-elevated">
+              <div className="h-full bg-primary" style={{ width: `${faturamentoDetalhe.metaProgresso}%` }} />
+            </div>
+            <p className="mt-1.5 text-[11px] text-muted-foreground">
+              {faturamentoDetalhe.metaProgresso}% atingido · faltam {fmtBRL(faturamentoDetalhe.meta - faturamento.total)}
+            </p>
+          </div>
         </div>
       </div>
+
+      {/* Detalhe do faturamento */}
+      <section>
+        <SectionTitle>Detalhes do faturamento</SectionTitle>
+        <div className="grid grid-cols-3 gap-3">
+          <DetailBlock label="Bruto" value={fmtBRL(faturamentoDetalhe.bruto)} />
+          <DetailBlock label="Taxas" value={`- ${fmtBRL(faturamentoDetalhe.taxas)}`} />
+          <DetailBlock label="Reembolsos" value={`- ${fmtBRL(faturamentoDetalhe.reembolsos)}`} />
+        </div>
+
+        <div className="mt-3 rounded-2xl border border-border bg-card p-4">
+          <h4 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+            Faturamento por canal
+          </h4>
+          <div className="space-y-3">
+            {faturamentoDetalhe.canais.map((c) => (
+              <div key={c.nome}>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-medium text-foreground">{c.nome}</span>
+                  <span className="font-semibold text-foreground">{fmtBRL(c.valor)}</span>
+                </div>
+                <div className="mt-1 flex items-center gap-2">
+                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-elevated">
+                    <div className="h-full bg-primary" style={{ width: `${c.share}%` }} />
+                  </div>
+                  <span className="w-10 text-right text-[11px] text-muted-foreground">{c.share}%</span>
+                  <Trend value={c.variacao} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-3 rounded-2xl border border-border bg-card p-4">
+          <h4 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+            Top produtos (30d)
+          </h4>
+          <div className="space-y-2">
+            {faturamentoDetalhe.topProdutos.map((p, i) => (
+              <div key={p.nome} className="flex items-center justify-between gap-2 border-b border-border/50 pb-2 last:border-0 last:pb-0">
+                <div className="flex min-w-0 items-center gap-2">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-elevated font-mono text-[10px] font-bold text-primary">
+                    {i + 1}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-medium text-foreground">{p.nome}</p>
+                    <p className="text-[11px] text-muted-foreground">{fmtInt(p.pedidos)} pedidos</p>
+                  </div>
+                </div>
+                <span className="text-sm font-semibold text-foreground">{fmtBRL(p.receita)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-3 rounded-2xl border border-border bg-card p-4">
+          <h4 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+            Formas de pagamento
+          </h4>
+          <div className="flex h-2 overflow-hidden rounded-full bg-elevated">
+            {faturamentoDetalhe.formasPagamento.map((f, i) => (
+              <div
+                key={f.nome}
+                className={i === 0 ? "bg-primary" : i === 1 ? "bg-success" : "bg-warning"}
+                style={{ width: `${f.share}%` }}
+              />
+            ))}
+          </div>
+          <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+            {faturamentoDetalhe.formasPagamento.map((f, i) => (
+              <div key={f.nome}>
+                <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
+                  <span className={`h-2 w-2 rounded-full ${i === 0 ? "bg-primary" : i === 1 ? "bg-success" : "bg-warning"}`} />
+                  {f.nome}
+                </div>
+                <div className="font-display text-sm font-bold text-foreground">{f.share}%</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Ads */}
       <section>
@@ -113,6 +209,65 @@ function Dashboard() {
           <StatCard icon={<Eye className="h-4 w-4" />} label="Impressões" value={`${(ads.impressoes.valor / 1000).toFixed(0)}k`} trend={ads.impressoes.variacao} />
           <StatCard icon={<MousePointerClick className="h-4 w-4" />} label="Cliques" value={fmtInt(ads.cliques.valor)} trend={ads.cliques.variacao} />
           <StatCard icon={<Percent className="h-4 w-4" />} label="CTR" value={`${ads.ctr.valor}%`} trend={ads.ctr.variacao} />
+        </div>
+
+        <div className="mt-3 rounded-2xl border border-border bg-card p-4">
+          <h4 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+            Campanhas ativas
+          </h4>
+          <div className="space-y-3">
+            {adsDetalhe.campanhas.map((c) => (
+              <div key={c.nome} className="border-b border-border/50 pb-3 last:border-0 last:pb-0">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold text-foreground">{c.nome}</p>
+                    <p className="text-[11px] text-muted-foreground">{c.canal}</p>
+                  </div>
+                  <span
+                    className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase ${
+                      c.status === "ativa"
+                        ? "bg-success/15 text-success"
+                        : c.status === "teste"
+                        ? "bg-primary/15 text-primary"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {c.status}
+                  </span>
+                </div>
+                <div className="mt-2 grid grid-cols-3 gap-2 text-[11px]">
+                  <div>
+                    <p className="uppercase tracking-wider text-muted-foreground">Invest.</p>
+                    <p className="font-semibold text-foreground">{fmtBRL(c.investido)}</p>
+                  </div>
+                  <div>
+                    <p className="uppercase tracking-wider text-muted-foreground">Retorno</p>
+                    <p className="font-semibold text-foreground">{fmtBRL(c.retorno)}</p>
+                  </div>
+                  <div>
+                    <p className="uppercase tracking-wider text-muted-foreground">ROAS</p>
+                    <p className={`font-semibold ${c.roas >= 3 ? "text-success" : c.roas >= 2 ? "text-warning" : "text-destructive"}`}>
+                      {c.roas.toFixed(2)}x
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-3 rounded-2xl border border-border bg-card p-4">
+          <h4 className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+            Próximas ações da equipe
+          </h4>
+          <ul className="space-y-2 text-sm">
+            {adsDetalhe.proximasAcoes.map((a, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                <span className="text-foreground">{a}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -233,6 +388,15 @@ function MiniStat({
       <div className="mt-0.5">
         <Trend value={trend} />
       </div>
+    </div>
+  );
+}
+
+function DetailBlock({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-border bg-card p-3">
+      <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</p>
+      <p className="mt-1 font-display text-sm font-bold text-foreground">{value}</p>
     </div>
   );
 }

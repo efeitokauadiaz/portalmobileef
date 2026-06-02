@@ -1,5 +1,5 @@
-import { Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Home, ClipboardList, User, Bell, Plus } from "lucide-react";
+import { Link, Outlet, useRouter, useRouterState } from "@tanstack/react-router";
+import { Home, ClipboardList, User, Bell, Plus, LogOut } from "lucide-react";
 import { cliente } from "@/lib/data/mock";
 
 const navItems = [
@@ -10,6 +10,12 @@ const navItems = [
 
 export function AppLayout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const router = useRouter();
+
+  const handleLogout = () => {
+    if (typeof window !== "undefined") localStorage.removeItem("ev-auth");
+    router.navigate({ to: "/entrar" });
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -23,6 +29,13 @@ export function AppLayout() {
             <div className="flex items-center gap-2">
               <button className="rounded-full border border-border bg-card p-2 text-muted-foreground transition hover:text-foreground" aria-label="Notificações">
                 <Bell className="h-4 w-4" />
+              </button>
+              <button
+                onClick={handleLogout}
+                className="rounded-full border border-border bg-card p-2 text-muted-foreground transition hover:text-foreground"
+                aria-label="Sair"
+              >
+                <LogOut className="h-4 w-4" />
               </button>
               <Link
                 to="/perfil"
