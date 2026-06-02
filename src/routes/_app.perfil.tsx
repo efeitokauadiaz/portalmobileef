@@ -106,7 +106,7 @@ function Perfil() {
           <MenuRow icon={<Bell className="h-4 w-4" />} label="Notificações" />
           <MenuRow icon={<Lock className="h-4 w-4" />} label="Segurança e senha" />
           <MenuRow icon={<HelpCircle className="h-4 w-4" />} label="Central de ajuda" />
-          <MenuRow icon={<LogOut className="h-4 w-4 text-destructive" />} label="Sair" danger />
+          <MenuRow icon={<LogOut className="h-4 w-4 text-destructive" />} label="Sair" danger onClick={handleSair} />
         </div>
       </section>
 
