@@ -10,7 +10,6 @@ const ACCESS_CODE = "123456";
 
 function EntrarPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
 
