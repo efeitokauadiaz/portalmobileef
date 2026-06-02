@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as EntrarRouteImport } from './routes/entrar'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app.index'
 import { Route as AppPerfilRouteImport } from './routes/_app.perfil'
@@ -16,6 +17,11 @@ import { Route as AppDemandasIndexRouteImport } from './routes/_app.demandas.ind
 import { Route as AppDemandasNovaRouteImport } from './routes/_app.demandas.nova'
 import { Route as AppDemandasIdRouteImport } from './routes/_app.demandas.$id'
 
+const EntrarRoute = EntrarRouteImport.update({
+  id: '/entrar',
+  path: '/entrar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppRoute = AppRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
@@ -48,12 +54,14 @@ const AppDemandasIdRoute = AppDemandasIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
+  '/entrar': typeof EntrarRoute
   '/perfil': typeof AppPerfilRoute
   '/demandas/$id': typeof AppDemandasIdRoute
   '/demandas/nova': typeof AppDemandasNovaRoute
   '/demandas/': typeof AppDemandasIndexRoute
 }
 export interface FileRoutesByTo {
+  '/entrar': typeof EntrarRoute
   '/perfil': typeof AppPerfilRoute
   '/': typeof AppIndexRoute
   '/demandas/$id': typeof AppDemandasIdRoute
@@ -63,6 +71,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
+  '/entrar': typeof EntrarRoute
   '/_app/perfil': typeof AppPerfilRoute
   '/_app/': typeof AppIndexRoute
   '/_app/demandas/$id': typeof AppDemandasIdRoute
@@ -71,12 +80,25 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/perfil' | '/demandas/$id' | '/demandas/nova' | '/demandas/'
+  fullPaths:
+    | '/'
+    | '/entrar'
+    | '/perfil'
+    | '/demandas/$id'
+    | '/demandas/nova'
+    | '/demandas/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/perfil' | '/' | '/demandas/$id' | '/demandas/nova' | '/demandas'
+  to:
+    | '/entrar'
+    | '/perfil'
+    | '/'
+    | '/demandas/$id'
+    | '/demandas/nova'
+    | '/demandas'
   id:
     | '__root__'
     | '/_app'
+    | '/entrar'
     | '/_app/perfil'
     | '/_app/'
     | '/_app/demandas/$id'
@@ -86,10 +108,18 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
+  EntrarRoute: typeof EntrarRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/entrar': {
+      id: '/entrar'
+      path: '/entrar'
+      fullPath: '/entrar'
+      preLoaderRoute: typeof EntrarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app': {
       id: '/_app'
       path: ''
@@ -155,6 +185,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
+  EntrarRoute: EntrarRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
