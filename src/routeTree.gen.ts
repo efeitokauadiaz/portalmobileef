@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app.index'
 import { Route as AppDemandasIndexRouteImport } from './routes/_app.demandas.index'
+import { Route as AppDemandasNovaRouteImport } from './routes/_app.demandas.nova'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -27,27 +28,40 @@ const AppDemandasIndexRoute = AppDemandasIndexRouteImport.update({
   path: '/demandas/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppDemandasNovaRoute = AppDemandasNovaRouteImport.update({
+  id: '/demandas/nova',
+  path: '/demandas/nova',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
+  '/demandas/nova': typeof AppDemandasNovaRoute
   '/demandas/': typeof AppDemandasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AppIndexRoute
+  '/demandas/nova': typeof AppDemandasNovaRoute
   '/demandas': typeof AppDemandasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
   '/_app/': typeof AppIndexRoute
+  '/_app/demandas/nova': typeof AppDemandasNovaRoute
   '/_app/demandas/': typeof AppDemandasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demandas/'
+  fullPaths: '/' | '/demandas/nova' | '/demandas/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demandas'
-  id: '__root__' | '/_app' | '/_app/' | '/_app/demandas/'
+  to: '/' | '/demandas/nova' | '/demandas'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_app/'
+    | '/_app/demandas/nova'
+    | '/_app/demandas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,16 +91,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDemandasIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/demandas/nova': {
+      id: '/_app/demandas/nova'
+      path: '/demandas/nova'
+      fullPath: '/demandas/nova'
+      preLoaderRoute: typeof AppDemandasNovaRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
+  AppDemandasNovaRoute: typeof AppDemandasNovaRoute
   AppDemandasIndexRoute: typeof AppDemandasIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppIndexRoute: AppIndexRoute,
+  AppDemandasNovaRoute: AppDemandasNovaRoute,
   AppDemandasIndexRoute: AppDemandasIndexRoute,
 }
 
