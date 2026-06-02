@@ -1,17 +1,19 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { KeyRound, ShieldCheck } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { validateStoreAccess } from "@/lib/auth.functions";
 
 export const Route = createFileRoute("/entrar")({
   component: EntrarPage,
 });
 
-const ACCESS_CODE = "123456";
-
 function EntrarPage() {
   const router = useRouter();
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const validate = useServerFn(validateStoreAccess);
 
   useEffect(() => {
     if (typeof window !== "undefined" && localStorage.getItem("ev-auth") === "ok") {
@@ -29,19 +31,30 @@ function EntrarPage() {
     return null;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationError = validateStoreId(code);
     if (validationError) {
       setError(validationError);
       return;
     }
-    if (code.trim() !== ACCESS_CODE) {
-      setError("ID da loja inválido. Verifique com seu consultor.");
-      return;
+    setLoading(true);
+    try {
+      const result = await validate({ data: { storeId: code.trim() } });
+      if (!result.ok) {
+        setError(result.reason);
+        return;
+      }
+      localStorage.setItem("ev-auth", "ok");
+      localStorage.setItem("ev-store-id", result.storeId);
+      localStorage.setItem("ev-store-identifier", result.identifier);
+      router.navigate({ to: "/" });
+    } catch (err) {
+      console.error(err);
+      setError("Erro ao validar o ID. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
-    localStorage.setItem("ev-auth", "ok");
-    router.navigate({ to: "/" });
   };
 
   return (
@@ -78,9 +91,10 @@ function EntrarPage() {
 
           <button
             type="submit"
-            className="mt-5 w-full rounded-full bg-primary py-3 text-sm font-semibold text-primary-foreground active:scale-95"
+            disabled={loading}
+            className="mt-5 w-full rounded-full bg-primary py-3 text-sm font-semibold text-primary-foreground active:scale-95 disabled:opacity-60"
           >
-            Entrar
+            {loading ? "Validando..." : "Entrar"}
           </button>
 
           <p className="mt-4 text-center text-[11px] text-muted-foreground">
@@ -88,9 +102,6 @@ function EntrarPage() {
           </p>
         </form>
 
-        <p className="mt-6 text-center text-[11px] text-muted-foreground">
-          Código demo: <span className="font-mono text-foreground">123456</span>
-        </p>
       </div>
     </div>
   );
