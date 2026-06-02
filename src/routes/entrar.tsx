@@ -52,28 +52,15 @@ function EntrarPage() {
             Acesse sua conta
           </div>
 
-          <div className="space-y-4">
-            <div>
-              <label className="mb-1.5 block text-xs font-medium text-muted-foreground">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                placeholder="seu@email.com"
-                className="w-full rounded-xl border border-border bg-elevated px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
-              />
-            </div>
-
-            <div>
-              <label className="mb-1.5 block text-xs font-medium text-muted-foreground">Código de acesso</label>
-              <input
-                type="text"
-                value={code}
-                onChange={(e) => { setCode(e.target.value); setError(""); }}
-                placeholder="Digite o código de acesso"
-                className="w-full rounded-xl border border-border bg-elevated px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
-              />
-            </div>
+          <div>
+            <label className="mb-1.5 block text-xs font-medium text-muted-foreground">ID de loja</label>
+            <input
+              type="text"
+              value={code}
+              onChange={(e) => { setCode(e.target.value); setError(""); }}
+              placeholder="Digite o ID da loja"
+              className="w-full rounded-xl border border-border bg-elevated px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+            />
           </div>
 
           {error && <p className="mt-3 text-xs font-medium text-destructive">{error}</p>}
