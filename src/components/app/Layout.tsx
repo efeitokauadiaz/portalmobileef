@@ -60,7 +60,7 @@ export function AppLayout() {
                 <li key={to}>
                   <Link
                     to={to}
-                    className={`flex flex-col items-center gap-1 py-3 text-[11px] font-medium uppercase tracking-wide transition ${
+                    className={`flex flex-col items-center gap-1 py-5 text-[11px] font-medium uppercase tracking-wide transition ${
                       active ? "text-primary" : "text-muted-foreground"
                     }`}
                   >
