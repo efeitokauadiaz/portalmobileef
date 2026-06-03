@@ -1,5 +1,5 @@
 import { Link, Outlet, useRouter, useRouterState } from "@tanstack/react-router";
-import { Home, ClipboardList, User, Bell, Plus, LogOut } from "lucide-react";
+import { Home, ClipboardList, User, Bell, LogOut } from "lucide-react";
 import { cliente } from "@/lib/data/mock";
 
 const navItems = [
@@ -73,14 +73,6 @@ export function AppLayout() {
           </ul>
         </nav>
 
-        <Link
-          to="/demandas/nova"
-          className="fixed bottom-24 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition active:scale-95"
-          style={{ maxWidth: "calc(28rem - 2.5rem)" }}
-        >
-          <Plus className="h-4 w-4" />
-          Abrir demanda
-        </Link>
       </div>
     </div>
   );
