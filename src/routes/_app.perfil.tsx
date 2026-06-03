@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
   Building2,
   Mail,
@@ -8,7 +8,6 @@ import {
   Bell,
   Lock,
   HelpCircle,
-  LogOut,
   ChevronRight,
   MessageCircle,
 } from "lucide-react";
