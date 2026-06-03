@@ -1,5 +1,5 @@
 import { Link, Outlet, useRouter, useRouterState } from "@tanstack/react-router";
-import { Home, ClipboardList, User, Bell, Plus, LogOut } from "lucide-react";
+import { Home, ClipboardList, User, Bell, LogOut } from "lucide-react";
 import { cliente } from "@/lib/data/mock";
 
 const navItems = [
