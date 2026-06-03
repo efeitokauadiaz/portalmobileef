@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
   Building2,
   Mail,
@@ -8,7 +8,6 @@ import {
   Bell,
   Lock,
   HelpCircle,
-  LogOut,
   ChevronRight,
   MessageCircle,
 } from "lucide-react";
@@ -19,14 +18,6 @@ export const Route = createFileRoute("/_app/perfil")({
 });
 
 function Perfil() {
-  const navigate = useNavigate();
-
-  const handleSair = () => {
-    localStorage.removeItem("ev-store-id");
-    localStorage.removeItem("ev-store-identifier");
-    navigate({ to: "/entrar" });
-  };
-
   return (
     <div className="space-y-5 px-5 pt-5">
       <div>
@@ -106,7 +97,7 @@ function Perfil() {
           <MenuRow icon={<Bell className="h-4 w-4" />} label="Notificações" />
           <MenuRow icon={<Lock className="h-4 w-4" />} label="Segurança e senha" />
           <MenuRow icon={<HelpCircle className="h-4 w-4" />} label="Central de ajuda" />
-          <MenuRow icon={<LogOut className="h-4 w-4 text-destructive" />} label="Sair" danger onClick={handleSair} />
+          
         </div>
       </section>
 
